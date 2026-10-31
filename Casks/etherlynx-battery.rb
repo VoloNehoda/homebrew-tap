@@ -8,14 +8,19 @@ cask "etherlynx-battery" do
   homepage "https://github.com/VoloNehoda/etherlynx-battery"
 
   depends_on arch: :arm64
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "Etherlynx Battery.app"
 
   # Ad-hoc signed, not notarized: without this Gatekeeper blocks the first launch.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{appdir}/Etherlynx Battery.app"]
+  # Steps can't interpolate appdir, so this targets the default /Applications; a custom
+  # --appdir just keeps the quarantine flag (right-click → Open once).
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args:           ["-dr", "com.apple.quarantine", "/Applications/Etherlynx Battery.app"],
+        must_succeed:   false,
+        writable_paths: ["Etherlynx Battery.app"],
+        writable_base:  :appdir
   end
 
   # The charge-limit helper restores normal charging when launchd stops it.
