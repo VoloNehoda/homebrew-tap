@@ -1,6 +1,6 @@
 cask "etherlynx-battery" do
-  version "1.0.0"
-  sha256 "902d79199ce27a70b7f935d87a0c58be2ec2c77345f0de769fbe5298d7350392"
+  version "1.0.1"
+  sha256 "f0c9713668e226ae59381a6345959ffc80486678089fdf4280f10fa25f0e67dc"
 
   url "https://github.com/VoloNehoda/etherlynx-battery/releases/download/v#{version}/Etherlynx-Battery-#{version}.dmg"
   name "Etherlynx Battery"
